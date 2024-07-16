@@ -18,6 +18,7 @@ function createCard(element, deleteCard) {
 
     cardImage.src = element.link;
     cardTitle.textContent = element.name;
+    cardImage.alt = `Изображение ${element.name}`;
 
     cardDelete.addEventListener('click', deleteCard) 
      
