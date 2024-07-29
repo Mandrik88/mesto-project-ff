@@ -20,7 +20,7 @@ const profileDescription = document.querySelector('.profile__description')
 const formdEditProfile = document.forms['edit-profile']
 const nameInput = document.querySelector('.popup__input_type_name')
 const jobInput = document.querySelector('.popup__input_type_description')
-const popupCloseBtn = document.querySelectorAll('.popup__close')
+const popupCloseBtns = document.querySelectorAll('.popup__close')
 const popup = document.querySelector('.popup')
 const linkInput = document.querySelector('.popup__input_type_url')
 const formNewPlace = document.forms['new-place']
@@ -70,7 +70,7 @@ initialCards.forEach(function (element) {
 
   
   //обработчик закрытия попапов по нажатию на крестик
-  popupCloseBtn.forEach(event => {
+  popupCloseBtns.forEach(event => {
      const popup = event.closest('.popup')
     event.addEventListener('click', () => {
       closePopup(popup)

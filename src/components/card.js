@@ -26,7 +26,7 @@ return cardElement
 
 // @todo: Функция удаления карточки
 function deleteCard(event) {
-    let card = event.target.closest('.card')
+    const card = event.target.closest('.card')
     card.remove()
 }
 

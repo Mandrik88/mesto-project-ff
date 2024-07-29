@@ -5,14 +5,14 @@ const openPopup = (popup) => {
     popup.classList.add('popup_is-opened')
     popup.classList.add('popup_is-animated')
     document.addEventListener('keydown', handleCloseEsc)
-    popup.addEventListener('click', modalWindowClose)
+    popup.addEventListener('click', closeModal)
     }
 
 //Функция закрытия модального окна
   const closePopup = (popup) => {
     popup.classList.remove('popup_is-opened')
   document.removeEventListener('keydown', handleCloseEsc)
-  popup.removeEventListener('click', modalWindowClose)
+  popup.removeEventListener('click', closeModal)
   }
 
   //Функция закрытия по клавише Escape
@@ -23,7 +23,7 @@ const handleCloseEsc = (evt) => {
     }
   }
   
-  const modalWindowClose = (evt) => {
+  const closeModal = (evt) => {
     if (evt.target === evt.currentTarget) {
       closePopup(evt.currentTarget);
     };
