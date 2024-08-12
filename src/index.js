@@ -4,6 +4,7 @@ import '../pages/index.css';
 import { initialCards } from './cards.js';
 import { openPopup, closePopup } from './components/modal.js';
 import { createCard, deleteCard, likeOnCard } from './components/card.js';
+import { validationConfig, enableValidation, clearValidation } from './components/validation.js';
 
 
 // @todo: DOM узлы
@@ -38,6 +39,7 @@ initialCards.forEach(function (element) {
   //обработчик открытия модального окна по кнопке (редактирование профиля)
   profileEditBtn.addEventListener('click', () => {
     openPopup(popupTpEdit)
+    clearValidation(popupTpEdit, validationConfig)
 
     nameInput.value = profileTitle.textContent
     jobInput.value = profileDescription.textContent
@@ -46,6 +48,7 @@ initialCards.forEach(function (element) {
   //обработчик открытия модального окна по кнопке добавить
   profileAddBtn.addEventListener('click', () => {
     openPopup(popupTpNewCard)
+    clearValidation(popupTpNewCard, validationConfig)
   } )
 
 
@@ -91,4 +94,8 @@ initialCards.forEach(function (element) {
     closePopup(popupTpNewCard)
     event.target.reset()
    }
+
+
 formNewPlace.addEventListener('submit', createNewCard)
+
+enableValidation(validationConfig);
