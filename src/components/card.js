@@ -1,9 +1,9 @@
 
  const cardTemplate = document.querySelector('#card-template').content
-import { delCard, addLikeCard, deleteLikeCard } from "./api.js"
+import { addLikeCard, deleteLikeCard } from "./api.js"
 import { openPopup, closePopup } from "./modal.js"
 // //@todo: Функция создания карточки
-function createCard(element, userId, deleteCard, likeOnCard, openPopupImage) {
+function createCard(element, userId, openPopupToDelCard, likeOnCard, openPopupImage) {
     const cardElement = cardTemplate.querySelector('.places__item').cloneNode(true)
     const cardDelete = cardElement.querySelector('.card__delete-button')
     const cardLike = cardElement.querySelector('.card__like-button')
@@ -31,7 +31,7 @@ const cardId = element._id
         cardDelete.remove();
       } else {
         cardDelete.addEventListener('click', () => {
-          deleteCard(cardElement, cardId);
+          openPopupToDelCard(cardElement, cardId);
         });
       }
     
@@ -43,28 +43,6 @@ const cardId = element._id
 return cardElement
 }
 
-// @todo: Функция удаления карточки
-function deleteCard(element, cardId) {
-    const delCardPopup = document.querySelector('.popup__delete-card')
-
-    openPopup(delCardPopup);
-    const delButton = delCardPopup.querySelector('.popup__button');
-
-    delButton.onclick = () => {
-        delCard(cardId)
-    
-        .then(() => {
-          element.remove()
-          closePopup(delCardPopup)      
-        })
-    
-        .catch((err) => {
-          console.log(err)
-        })
-      }
-    // const card = event.target.closest('.card')
-    // card.remove()
-}
 
 //функция лайка на карточке
 function likeOnCard(evt, cardId, likeCont) {
@@ -91,15 +69,6 @@ function likeOnCard(evt, cardId, likeCont) {
   }
 
 }
-  //   const likeMethod = likeButton.classList.contains('card__like-button_is-active') ? deleteLikeCard : addLikeCard;
-  // likeMethod(cardId) 
-  //         .then((res) => {
-  //           likeButton.classList.add('card__like-button_is-active') 
-  //           likeCont.textContent = res.likes.length 
-  //         })
-  // .catch(err => console.log(err));
-  
-    // evt.target.classList.toggle('card__like-button_is-active')
-  
+ 
 
-  export {createCard, deleteCard, likeOnCard}
+  export {createCard, likeOnCard}

@@ -3,9 +3,9 @@
 import '../pages/index.css';
 import { initialCards } from './cards.js';
 import { openPopup, closePopup } from './components/modal.js';
-import { createCard, deleteCard, likeOnCard } from './components/card.js';
+import { createCard, likeOnCard } from './components/card.js';
 import { validationConfig, enableValidation, clearValidation } from './components/validation.js';
-import { getInfo, getInitialCards, editInfoUser, addNewCard, changeAvatar } from './components/api.js';
+import { getInfo, getInitialCards, editInfoUser, delCard, addNewCard, changeAvatar } from './components/api.js';
 //import { data, error } from 'jquery';
 
 
@@ -34,9 +34,10 @@ const formNewPlace = document.forms['new-place']
 const saveBtnNewCard = formNewPlace.querySelector('.popup__button')
 const cardNameInput = document.querySelector('.popup__input_type_card-name')
 const cardLinkInput =  document.querySelector('.popup__input_type_url')
+const delCardPopup = document.querySelector('.popup__delete-card')
+const delButton = delCardPopup.querySelector('.popup__button');
 
 const changeAvatarPopup = document. querySelector('.popup__change-avatar')
-const avatarButton = document.querySelector('.profile__image')
 const formChangeAvatar = changeAvatarPopup.querySelector('.popup__form')
 const avatarFormInput = formChangeAvatar.querySelector('.popup__input_type_url_avatar')
 const avatarSaveBtn = formChangeAvatar.querySelector('.popup__button')
@@ -64,7 +65,7 @@ function getInfoAndCards () {
   userId = userData._id
 
   cardsData.forEach((element) => {
-    const newCard = createCard(element, userId, deleteCard, likeOnCard, openPopupImage) 
+    const newCard = createCard(element, userId, openPopupToDelCard, likeOnCard, openPopupImage) 
     placesList.append(newCard)
   }) 
   })
@@ -75,6 +76,27 @@ function getInfoAndCards () {
 
 getInfoAndCards()
 
+
+// @todo: Функция открытия модального окна (то, в котором можно удалить карточку)
+function openPopupToDelCard(element, cardId) {
+  // const delCardPopup = document.querySelector('.popup__delete-card')
+
+  openPopup(delCardPopup);
+  delButton.onclick = () => {
+      delCard(cardId)
+  
+      .then(() => {
+        element.remove()
+        closePopup(delCardPopup)      
+      })
+  
+      .catch((err) => {
+        console.log(err)
+      })
+    }
+  // const card = event.target.closest('.card')
+  // card.remove()
+}
   //функция октрытия попапа по клику на картинку
   function openPopupImage (item) {
     popupImage.src = item.link
@@ -83,7 +105,7 @@ getInfoAndCards()
     openPopup(popupTpImage)
   }
 //Обработчик по клику на аватар (для смены)
-avatarButton.addEventListener ('click', () => {
+profileImg.addEventListener ('click', () => {
 
   avatarFormInput.value = '';
   
@@ -98,7 +120,7 @@ avatarButton.addEventListener ('click', () => {
     changeAvatar(avatarFormInput.value)
     .then((res) => {
       console.log(res)
-      avatarButton.style.backgroundImage = `url(${res.avatar})`
+      profileImg.style.backgroundImage = `url(${res.avatar})`
       console.log(`url(${res.avatar})`)
       closePopup(changeAvatarPopup)
     })
@@ -162,7 +184,7 @@ profileAddBtn.addEventListener('click', () => {
 
     addNewCard(element)
     .then((data) => {
-      const newCardPopup = createCard(data, userId, deleteCard, likeOnCard, openPopupImage)
+      const newCardPopup = createCard(data, userId, openPopupToDelCard, likeOnCard, openPopupImage)
 
       placesList.prepend(newCardPopup)
       closePopup(popupTpNewCard)
@@ -178,6 +200,7 @@ profileAddBtn.addEventListener('click', () => {
   }
   
 formNewPlace.addEventListener('submit', createNewCard)
+
 
 
 //обработчик закрытия попапов по нажатию на крестик

@@ -3,7 +3,7 @@ export {openPopup, closePopup}
 //Функиця открытия модального окна
 const openPopup = (popup) => {
     popup.classList.add('popup_is-opened')
-    popup.classList.add('popup_is-animated')
+    // popup.classList.add('popup_is-animated')
     document.addEventListener('keydown', handleCloseEsc)
     popup.addEventListener('click', closeModal)
     }
